@@ -1,0 +1,11 @@
+{
+  "name": "platypus",
+  "description": "Web service to provide time and platform for trains between two stations",
+  "repository": "automonkey/platypus",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.0.0",
+    "request": "^2.0.0"
+  }
+}
+
