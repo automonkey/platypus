@@ -26,6 +26,12 @@ For example:
 
 `http://localhost:3000/vic/bug`
 
+## Running tests
+
+To execute the tests run:
+
+`npm run-script test`
+
 
 [1] http://www.nationalrail.co.uk/100299.aspx
 

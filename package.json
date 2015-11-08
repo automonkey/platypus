@@ -3,9 +3,18 @@
   "description": "Web service to provide time and platform for trains between two stations",
   "repository": "automonkey/platypus",
   "version": "0.0.1",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
   "dependencies": {
     "express": "^4.0.0",
-    "request": "^2.0.0"
+    "JSONPath": "~0.10.0",
+    "request": "^2.0.0",
+    "xml2js": "~0.4.0",
+    "xml2js-xpath": "~0.4.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.0.0"
   }
 }
 
