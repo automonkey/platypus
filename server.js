@@ -13,6 +13,10 @@ var environmentVariableOrExit = function(envVar) {
 var port = process.env.PORT || 3000;
 
 var appData = {
+  googleAnalytics: {
+    trackingCode: process.env.GA_TRACKING_CODE,
+    domain: process.env.GA_DOMAIN
+  },
   ojpCreds: {
     user: environmentVariableOrExit('OJP_USER'),
     password: environmentVariableOrExit('OJP_PASS')

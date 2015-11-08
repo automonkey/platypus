@@ -6,11 +6,13 @@ Web service providing basic next train info for UK National Rail train journeys.
 
 The following environment variables exist and should be configured prior to execution:
 
-| Variable      | Usage                                               | Default |
-| ------------- | --------------------------------------------------- | ------- |
-| PORT          | Port number to listen on                            | 3000    |
-| OJP_USER      | Username for the ojp.nationalrail.co.uk web service |         |
-| OJP_PASS      | Password for the ojp.nationalrail.co.uk web service |         |
+| Variable         | Usage                                               | Required? | Default |
+| ---------------- | --------------------------------------------------- | --------- | ------- |
+| PORT             | Port number to listen on                            | N         | 3000    |
+| GA_TRACKING_CODE | Google Analytics tracking code to use for events    | N         |         |
+| GA_DOMAIN        | Google Analytics tracking domain to use for events  | N         |         |
+| OJP_USER         | Username for the ojp.nationalrail.co.uk web service | Y         |         |
+| OJP_PASS         | Password for the ojp.nationalrail.co.uk web service | Y         |         |
 
 To execute the web service run:
 
