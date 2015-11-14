@@ -1,4 +1,4 @@
-var assert = require('assert');
+var assert = require('chai').assert;
 var fs = require('fs');
 var ojpParsing = require('../lib/ojpParser');
 
@@ -18,9 +18,14 @@ describe('OJP Response Parsing', function() {
     assert.equal(parsedData.results.length, 2);
   });
 
-  it('Should report scheduled departure times', function() {
-    assert.equal(parsedData.results[0].scheduledDeparture, '2013-08-22T17:15:00.000+01:00')
-    assert.equal(parsedData.results[1].scheduledDeparture, '2013-08-22T17:35:00.000+01:00')
+  it('Should include scheduled departure times', function() {
+    assert.equal(parsedData.results[0].scheduledDeparture, '2013-08-22T17:15:00.000+01:00');
+    assert.equal(parsedData.results[1].scheduledDeparture, '2013-08-22T17:35:00.000+01:00');
+  });
+
+  it('Should include origin platform, where available', function() {
+    assert.equal(parsedData.results[0].originPlatform, 5);
+    assert.isUndefined(parsedData.results[1].originPlatform, 'Should only include platform element if supplied by OJP');
   });
 });
 

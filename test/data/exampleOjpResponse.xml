@@ -85,8 +85,6 @@
             <ns3:stationCRS>EUS</ns3:stationCRS>
             <ns3:scheduledTime>2013-08-22T19:42:00.000+01:00</ns3:scheduledTime>
           </ns2:destinationInstants>
-          <ns2:originPlatform>6</ns2:originPlatform>
-          <ns2:destinationPlatform>2</ns2:destinationPlatform>
           <ns2:realtimeClassification>NORMAL</ns2:realtimeClassification>
           <ns2:mode>TRAIN</ns2:mode>
           <ns2:operator>
