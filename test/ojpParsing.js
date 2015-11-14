@@ -19,8 +19,8 @@ describe('OJP Response Parsing', function() {
   });
 
   it('Should report scheduled departure times', function() {
-    assert.equal(parsedData.results[0].scheduledDeparture, '2009-09-04T10:49:00.000+01:00')
-    assert.equal(parsedData.results[1].scheduledDeparture, '2009-09-04T11:02:00.000+01:00')
+    assert.equal(parsedData.results[0].scheduledDeparture, '2013-08-22T17:15:00.000+01:00')
+    assert.equal(parsedData.results[1].scheduledDeparture, '2013-08-22T17:35:00.000+01:00')
   });
 });
 
