@@ -11,8 +11,8 @@ var exampleParsedOjpResponse = {
 var ojpMock = {
   initOjpInterface: function() {
     return {
-      fetchJourneyData: function() {
-        return exampleParsedOjpResponse;
+      fetchJourneyData: function(route, handler) {
+        handler(exampleParsedOjpResponse);
       }
     };
   }
@@ -33,9 +33,10 @@ describe('Request Processing', function() {
     mockery.disable();
   });
 
-  it('Should return OJP results', function() {
+  it('Should return OJP results', function(done) {
     requestProcessor.processRequest('gtw', 'bug', function(results) {
       assert.equal(results, exampleParsedOjpResponse);
+      done();
     });
   });
 });
