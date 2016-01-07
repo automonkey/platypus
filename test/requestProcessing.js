@@ -31,7 +31,7 @@ var ojpMock = {
           new OJPResult().withOriginPlatform(route.destination + '-1stResultPlat').build(),
           new OJPResult().withOriginPlatform(route.destination + '-2ndResultPlat').build(),
         ];
-        handler({ results: results });
+        handler(results);
       }
     };
   }
