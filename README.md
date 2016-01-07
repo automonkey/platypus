@@ -20,13 +20,25 @@ To execute the web service run:
 
 ## Usage
 
-The service accepts URLS of the form:
+The service accepts URLS of multiple forms:
 
-`http://host/:originStation/:destinationStation`
+### Single destination
+
+`http://host/originStation/destinationStation`
 
 For example:
 
 `http://localhost:3000/vic/bug`
+
+### Multiple destinations
+
+`http://host/originStation?destinations=destinationStations`
+
+Where destinationStations is a comma seperated list.
+
+For example:
+
+`http://localhost:3000/vic?destinations=wvf,bug`
 
 ## Running tests
 

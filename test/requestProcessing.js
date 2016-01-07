@@ -1,18 +1,37 @@
 var assert = require('chai').assert;
 var mockery = require('mockery');
+var chai = require("chai");
+chai.should();
+chai.use(require('chai-things'));
 
-var exampleParsedOjpResponse = {
-  results: [
-    {scheduledDeparture: '2013-08-22T17:15:00.000+01:00', originPlatform: '5'},
-    {scheduledDeparture: '2013-08-22T17:35:00.000+01:00'}
-  ]
-}
+var OJPResult = function() {
+  var scheduledDeparture = '2013-08-22T17:15:00.000+01:00';
+  var originPlatform = null;
+
+  return {
+    withOriginPlatform: function(platform) {
+      originPlatform = platform;
+      return this;
+    },
+    build: function() {
+      var res = { scheduledDeparture: scheduledDeparture };
+      if (originPlatform !== null) {
+        res.originPlatform = originPlatform;
+      }
+      return res;
+    }
+  };
+};
 
 var ojpMock = {
   initOjpInterface: function() {
     return {
       fetchJourneyData: function(route, handler) {
-        handler(exampleParsedOjpResponse);
+        var results = [
+          new OJPResult().withOriginPlatform(route.destination + '-1stResultPlat').build(),
+          new OJPResult().withOriginPlatform(route.destination + '-2ndResultPlat').build(),
+        ];
+        handler({ results: results });
       }
     };
   }
@@ -33,9 +52,15 @@ describe('Request Processing', function() {
     mockery.disable();
   });
 
-  it('Should return OJP results', function(done) {
-    requestProcessor.processRequest('gtw', 'bug', function(results) {
-      assert.equal(results, exampleParsedOjpResponse);
+  it('Should return OJP results for all destinations', function(done) {
+    requestProcessor.processRequest('frm', ['to1', 'to2', 'to3'], function(results) {
+      assert.equal(results.length, 6);
+      results.should.contain.a.thing.with.property('originPlatform', 'to1-1stResultPlat');
+      results.should.contain.a.thing.with.property('originPlatform', 'to1-2ndResultPlat');
+      results.should.contain.a.thing.with.property('originPlatform', 'to2-1stResultPlat');
+      results.should.contain.a.thing.with.property('originPlatform', 'to2-2ndResultPlat');
+      results.should.contain.a.thing.with.property('originPlatform', 'to3-1stResultPlat');
+      results.should.contain.a.thing.with.property('originPlatform', 'to3-2ndResultPlat');
       done();
     });
   });

@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
+    "chai-things": "~0.2.0",
     "mocha": "^2.0.0",
     "mockery": "^1.0.0"
   }
