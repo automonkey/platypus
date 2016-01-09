@@ -1,6 +1,7 @@
 var assert = require('chai').assert;
+var chai = require('chai');
 var mockery = require('mockery');
-var chai = require("chai");
+var q = require('q');
 chai.should();
 chai.use(require('chai-things'));
 
@@ -26,12 +27,14 @@ var OJPResult = function() {
 var ojpMock = {
   initOjpInterface: function() {
     return {
-      fetchJourneyData: function(route, handler) {
+      fetchJourneyData: function(route) {
         var results = [
           new OJPResult().withOriginPlatform(route.destination + '-1stResultPlat').build(),
           new OJPResult().withOriginPlatform(route.destination + '-2ndResultPlat').build(),
         ];
-        handler(results);
+        var defferedReturn = q.defer();
+        defferedReturn.resolve(results);
+        return defferedReturn.promise;
       }
     };
   }
@@ -43,6 +46,7 @@ describe('Request Processing', function() {
   before(function() {
     mockery.enable();
     mockery.registerMock('./ojp', ojpMock);
+    mockery.registerAllowable('q')
     mockery.registerAllowable('../lib/requestProcessing')
     var requestProcessing = require('../lib/requestProcessing')
     requestProcessor = requestProcessing.initRequestProcessor();
