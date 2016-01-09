@@ -2,20 +2,29 @@ var assert = require('chai').assert;
 var chai = require('chai');
 var mockery = require('mockery');
 var q = require('q');
+
 chai.should();
 chai.use(require('chai-things'));
 
 var OJPResult = function() {
   var scheduledDeparture = '2013-08-22T17:15:00.000+01:00';
+  var destinationStation = 'BUG';
   var originPlatform = null;
 
   return {
+    withDestination: function(station) {
+      destinationStation = station;
+      return this;
+    },
     withOriginPlatform: function(platform) {
       originPlatform = platform;
       return this;
     },
     build: function() {
-      var res = { scheduledDeparture: scheduledDeparture };
+      var res = {
+        destinationStation: destinationStation,
+        scheduledDeparture: scheduledDeparture
+      };
       if (originPlatform !== null) {
         res.originPlatform = originPlatform;
       }
@@ -29,8 +38,14 @@ var ojpMock = {
     return {
       fetchJourneyData: function(route) {
         var results = [
-          new OJPResult().withOriginPlatform(route.destination + '-1stResultPlat').build(),
-          new OJPResult().withOriginPlatform(route.destination + '-2ndResultPlat').build(),
+          new OJPResult()
+            .withDestination(route.destination)
+            .withOriginPlatform(route.destination + '-1stResultPlat')
+            .build(),
+          new OJPResult()
+            .withDestination(route.destination)
+            .withOriginPlatform(route.destination + '-2ndResultPlat')
+            .build(),
         ];
         var defferedReturn = q.defer();
         defferedReturn.resolve(results);
@@ -65,6 +80,13 @@ describe('Request Processing', function() {
       results.should.contain.a.thing.with.property('originPlatform', 'to2-2ndResultPlat');
       results.should.contain.a.thing.with.property('originPlatform', 'to3-1stResultPlat');
       results.should.contain.a.thing.with.property('originPlatform', 'to3-2ndResultPlat');
+      done();
+    });
+  });
+
+  it('Should include destination station in results', function(done) {
+    requestProcessor.processRequest('frm', ['to'], function(results) {
+      results.should.all.have.property('destinationStation', 'to');
       done();
     });
   });
