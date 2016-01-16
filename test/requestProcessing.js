@@ -2,39 +2,12 @@ var assert = require('chai').assert;
 var chai = require('chai');
 var mockery = require('mockery');
 var q = require('q');
-var anOjpResult = require('./ojpResultBuilder').anOjpResult;
+var anOjpResult = require('./utils/ojpResultBuilder').anOjpResult;
+var ojpStub = require('./utils/ojpStub').createStubOjp();
 
 chai.should();
 chai.use(require('chai-things'));
 chai.use(require('chai-as-promised'));
-
-var ojpStub = {
-  stubOjpResults: {},
-
-  addResult: function(destination, ojpResult) {
-    if (this.stubOjpResults.hasOwnProperty(destination) === false) {
-      this.stubOjpResults[destination] = [];
-    }
-    this.stubOjpResults[destination].push(ojpResult);
-  },
-
-  resetStubResults: function() {
-    for (var member in this.stubOjpResults) {
-      delete this.stubOjpResults[member];
-    }
-  },
-
-  initOjpInterface: function() {
-    var stubRes = this.stubOjpResults;
-    return {
-      fetchJourneyData: function(route) {
-        var defferedReturn = q.defer();
-        defferedReturn.resolve(stubRes[route.destination] || []);
-        return defferedReturn.promise;
-      }
-    };
-  }
-};
 
 describe('Request Processing', function() {
 
