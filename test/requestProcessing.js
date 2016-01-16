@@ -5,6 +5,7 @@ var q = require('q');
 
 chai.should();
 chai.use(require('chai-things'));
+chai.use(require('chai-as-promised'));
 
 var OJPResult = function() {
   var scheduledDeparture = '2013-08-22T17:15:00.000+01:00';
@@ -81,7 +82,7 @@ describe('Request Processing', function() {
     ojpStub.resetStubResults();
   });
 
-  it('Should return OJP results for all destinations', function(done) {
+  it('Should return OJP results for all destinations', function() {
     ojpStub.addResult('to1', new OJPResult().withOriginPlatform('1').build());
     ojpStub.addResult('to1', new OJPResult().withOriginPlatform('2').build());
     ojpStub.addResult('to2', new OJPResult().withOriginPlatform('3').build());
@@ -89,26 +90,26 @@ describe('Request Processing', function() {
     ojpStub.addResult('to3', new OJPResult().withOriginPlatform('5').build());
     ojpStub.addResult('to3', new OJPResult().withOriginPlatform('6').build());
 
-    requestProcessor.processRequest('frm', ['to1', 'to2', 'to3'], function(results) {
-      assert.equal(results.length, 6);
-      results.should.contain.a.thing.with.property('originPlatform', '1');
-      results.should.contain.a.thing.with.property('originPlatform', '2');
-      results.should.contain.a.thing.with.property('originPlatform', '3');
-      results.should.contain.a.thing.with.property('originPlatform', '4');
-      results.should.contain.a.thing.with.property('originPlatform', '5');
-      results.should.contain.a.thing.with.property('originPlatform', '6');
-      done();
-    });
+    var results = requestProcessor.processRequest('frm', ['to1', 'to2', 'to3']);
+    return Promise.all([
+      results.should.eventually.have.length(6),
+      results.should.eventually.contain.a.thing.with.property('originPlatform', '1'),
+      results.should.eventually.contain.a.thing.with.property('originPlatform', '2'),
+      results.should.eventually.contain.a.thing.with.property('originPlatform', '3'),
+      results.should.eventually.contain.a.thing.with.property('originPlatform', '4'),
+      results.should.eventually.contain.a.thing.with.property('originPlatform', '5'),
+      results.should.eventually.contain.a.thing.with.property('originPlatform', '6')
+    ]);
   });
 
-  it('Should include destination station in results', function(done) {
+  it('Should include destination station in results', function() {
     ojpStub.addResult('to', new OJPResult().withDestination('to').build());
 
-    requestProcessor.processRequest('frm', ['to'], function(results) {
-      assert.equal(results.length, 1);
-      results.should.all.have.property('destinationStation', 'to');
-      done();
-    });
+    var results = requestProcessor.processRequest('frm', ['to']);
+    return Promise.all([
+      results.should.eventually.not.be.empty,
+      results.should.eventually.all.have.property('destinationStation', 'to')
+    ]);
   });
 });
 
