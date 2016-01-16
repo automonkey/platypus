@@ -2,37 +2,11 @@ var assert = require('chai').assert;
 var chai = require('chai');
 var mockery = require('mockery');
 var q = require('q');
+var anOjpResult = require('./ojpResultBuilder').anOjpResult;
 
 chai.should();
 chai.use(require('chai-things'));
 chai.use(require('chai-as-promised'));
-
-var OJPResult = function() {
-  var scheduledDeparture = '2013-08-22T17:15:00.000+01:00';
-  var destinationStation = 'BUG';
-  var originPlatform = null;
-
-  return {
-    withDestination: function(station) {
-      destinationStation = station;
-      return this;
-    },
-    withOriginPlatform: function(platform) {
-      originPlatform = platform;
-      return this;
-    },
-    build: function() {
-      var res = {
-        destinationStation: destinationStation,
-        scheduledDeparture: scheduledDeparture
-      };
-      if (originPlatform !== null) {
-        res.originPlatform = originPlatform;
-      }
-      return res;
-    }
-  };
-};
 
 var ojpStub = {
   stubOjpResults: {},
@@ -83,12 +57,12 @@ describe('Request Processing', function() {
   });
 
   it('Should return OJP results for all destinations', function() {
-    ojpStub.addResult('to1', new OJPResult().withOriginPlatform('1').build());
-    ojpStub.addResult('to1', new OJPResult().withOriginPlatform('2').build());
-    ojpStub.addResult('to2', new OJPResult().withOriginPlatform('3').build());
-    ojpStub.addResult('to2', new OJPResult().withOriginPlatform('4').build());
-    ojpStub.addResult('to3', new OJPResult().withOriginPlatform('5').build());
-    ojpStub.addResult('to3', new OJPResult().withOriginPlatform('6').build());
+    ojpStub.addResult('to1', anOjpResult().withOriginPlatform('1').build());
+    ojpStub.addResult('to1', anOjpResult().withOriginPlatform('2').build());
+    ojpStub.addResult('to2', anOjpResult().withOriginPlatform('3').build());
+    ojpStub.addResult('to2', anOjpResult().withOriginPlatform('4').build());
+    ojpStub.addResult('to3', anOjpResult().withOriginPlatform('5').build());
+    ojpStub.addResult('to3', anOjpResult().withOriginPlatform('6').build());
 
     var results = requestProcessor.processRequest('frm', ['to1', 'to2', 'to3']);
     return Promise.all([
@@ -103,7 +77,7 @@ describe('Request Processing', function() {
   });
 
   it('Should include destination station in results', function() {
-    ojpStub.addResult('to', new OJPResult().withDestination('to').build());
+    ojpStub.addResult('to', anOjpResult().withDestination('to').build());
 
     var results = requestProcessor.processRequest('frm', ['to']);
     return Promise.all([
