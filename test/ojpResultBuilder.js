@@ -27,5 +27,5 @@ var OjpResult = function() {
 
 module.exports.anOjpResult = function() {
   return new OjpResult();
-}
+};
 
