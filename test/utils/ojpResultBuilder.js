@@ -1,11 +1,15 @@
 var OjpResult = function() {
-  var scheduledDeparture = '2013-08-22T17:15:00.000+01:00';
   var destinationStation = 'BUG';
+  var scheduledDeparture = '2013-08-22T17:15:00.000+01:00';
   var originPlatform = null;
 
   return {
     withDestination: function(station) {
       destinationStation = station;
+      return this;
+    },
+    withScheduledDepartureTime: function(departureTime) {
+      scheduledDeparture = departureTime.toISOString();
       return this;
     },
     withOriginPlatform: function(platform) {
