@@ -16,7 +16,7 @@ The following environment variables exist and should be configured prior to exec
 
 To execute the web service run:
 
-`npm run-script start`
+`npm start`
 
 ## Usage
 
@@ -44,7 +44,7 @@ For example:
 
 To execute the tests run:
 
-`npm run-script test`
+`npm test`
 
 
 [1] http://www.nationalrail.co.uk/100299.aspx
