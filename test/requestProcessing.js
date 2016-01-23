@@ -1,4 +1,3 @@
-var assert = require('chai').assert;
 var chai = require('chai');
 var mockery = require('mockery');
 var q = require('q');
