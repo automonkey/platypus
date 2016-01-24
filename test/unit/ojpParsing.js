@@ -1,8 +1,8 @@
 var assert = require('chai').assert;
 var fs = require('fs');
-var ojpParsing = require('../lib/ojpParser');
+var ojpParsing = require('../../lib/ojpParser');
 
-var exampleOjpResponse = fs.readFileSync('./test/data/exampleOjpResponse.xml').toString();
+var exampleOjpResponse = fs.readFileSync('./test/unit/data/exampleOjpResponse.xml').toString();
 
 describe('OJP Response Parsing', function() {
 

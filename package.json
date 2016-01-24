@@ -4,7 +4,8 @@
   "repository": "automonkey/platypus",
   "version": "0.0.1",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "integration-test": "mocha 'test/integration/**/*.js'",
+    "test": "mocha 'test/unit/**/*.js'"
   },
   "dependencies": {
     "express": "^4.0.0",
@@ -21,7 +22,8 @@
     "chai-as-promised": "^5.0.0",
     "chai-things": "~0.2.0",
     "mocha": "^2.0.0",
-    "mockery": "^1.0.0"
+    "mockery": "^1.0.0",
+    "supertest": "^1.0.0"
   }
 }
 

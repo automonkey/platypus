@@ -1,6 +1,6 @@
 var chai = require('chai');
 var anOjpResult = require('./utils/ojpResultBuilder').anOjpResult;
-var processOjpResults = require('../lib/ojpResultProcessing').processOjpResults;
+var processOjpResults = require('../../lib/ojpResultProcessing').processOjpResults;
 
 chai.should();
 chai.use(require('chai-array'));

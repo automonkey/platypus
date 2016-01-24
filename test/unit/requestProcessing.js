@@ -26,8 +26,8 @@ describe('Request Processing', function() {
     mockery.registerMock('./ojp', ojpStub);
     mockery.registerMock('./ojpResultProcessing', ojpResultProcessingStub);
     mockery.registerAllowable('q')
-    mockery.registerAllowable('../lib/requestProcessing')
-    var requestProcessing = require('../lib/requestProcessing')
+    mockery.registerAllowable('../../lib/requestProcessing')
+    var requestProcessing = require('../../lib/requestProcessing')
     requestProcessor = requestProcessing.initRequestProcessor();
   });
 
