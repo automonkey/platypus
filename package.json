@@ -4,8 +4,8 @@
   "repository": "automonkey/platypus",
   "version": "0.0.1",
   "scripts": {
-    "integration-test": "mocha 'test/integration/**/*.js'",
-    "test": "mocha 'test/unit/**/*.js'"
+    "integration-test": "./node_modules/.bin/mocha 'test/integration/**/*.js'",
+    "test": "./node_modules/.bin/mocha 'test/unit/**/*.js'"
   },
   "dependencies": {
     "express": "^4.0.0",
