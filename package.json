@@ -9,8 +9,9 @@
     "lint": "./node_modules/jshint/bin/jshint **/*.js"
   },
   "dependencies": {
-    "express": "^4.0.0",
     "JSONPath": "~0.10.0",
+    "bluebird": "^3.3.1",
+    "express": "^4.0.0",
     "nodealytics": "~0.0.6",
     "q": "1.0.0",
     "request": "^2.0.0",
