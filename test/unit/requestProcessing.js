@@ -1,5 +1,6 @@
 var chai = require('chai');
 var mockery = require('mockery');
+var Promise = require('bluebird');
 var q = require('q');
 var anOjpResult = require('./utils/ojpResultBuilder').anOjpResult;
 var ojpStub = require('./utils/ojpStub').createStubOjp();
