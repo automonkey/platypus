@@ -3,6 +3,9 @@
   "description": "Web service to provide time and platform for trains between two stations",
   "repository": "automonkey/platypus",
   "version": "0.0.1",
+  "engines": {
+    "node": "0.12.10"
+  },
   "scripts": {
     "integration-test": "./node_modules/.bin/mocha 'test/integration/**/*.js'",
     "test": "./node_modules/.bin/mocha 'test/unit/**/*.js'",
