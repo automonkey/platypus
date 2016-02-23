@@ -16,6 +16,9 @@ describe('Server', function() {
   it('should report results on multi destination endpoint',
     testGetResultsFrom('/ECR?destinations=TBD,HHE'));
 
+  it('should reject requests with more than 3 destinations',
+    requestGeneratesBadRequestError('/ECR?destinations=ONE,TWO,THR,FOU'));
+
 });
 
 function testGetResultsFrom(path) {
@@ -25,7 +28,7 @@ function testGetResultsFrom(path) {
       .get(path)
       .expect(200)
       .expect('Content-Type', /json/)
-      .end(function(err, res){
+      .end(function(err, res) {
         if (err) throw done(err);
 
         var results = res.body;
@@ -39,3 +42,17 @@ function testGetResultsFrom(path) {
   };
 };
 
+function requestGeneratesBadRequestError(path) {
+  return function(done) {
+
+    request(app(appData))
+      .get(path)
+      .expect(400)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) throw done(err);
+
+        done();
+      });
+  };
+};

@@ -1,6 +1,7 @@
 var chai = require('chai');
 var mockery = require('mockery');
 var q = require('q');
+var InputError = require('../../lib/inputError');
 var anOjpResult = require('./utils/ojpResultBuilder').anOjpResult;
 var ojpStub = require('./utils/ojpStub').createStubOjp();
 
@@ -80,6 +81,12 @@ describe('Request Processing', function() {
       results.should.eventually.not.be.empty,
       results.should.eventually.all.have.property('was-processed-with-destinations', requestedDestinationArray)
     ]);
+  });
+
+  it('Should reject requests with more than 3 destinations', function() {
+    var result = requestProcessor.processRequest('frm', ['one', 'two', 'three', 'four']);
+
+    return result.should.be.rejectedWith(InputError);
   });
 });
 
