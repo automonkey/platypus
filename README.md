@@ -42,9 +42,19 @@ For example:
 
 ## Running tests
 
-To execute the tests run:
+To execute the unit tests run:
 
 `npm test`
+
+To execute the integration tests (will need required environment variables set) run:
+
+`npm run-script integration-test`
+
+## Running linter
+
+To execute the linter run:
+
+`npm run-script lint`
 
 
 [1] http://www.nationalrail.co.uk/100299.aspx
