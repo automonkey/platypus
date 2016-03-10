@@ -1,6 +1,8 @@
 var expect = require('chai').expect;
+var extend = require('util')._extend;
 var mockery = require('mockery');
-var ojpEnvVars = require('./utils/ojpEnvVarsBuilder');
+var appDynamicsEnvVars = require('./utils/appDynamicsEnvVarsBuilder');
+var envVars = require('./utils/envVarsBuilder');
 
 describe('App data generation', function() {
 
@@ -42,9 +44,9 @@ describe('App data generation', function() {
 
     it('Should read credentials', function() {
       envStub.setVars(
-        ojpEnvVars()
-          .withUser('some-username')
-          .withPassword('some-password')
+        envVars()
+          .withOjpUser('some-username')
+          .withOjpPassword('some-password')
           .build());
 
       var appData = dataFromEnv()
@@ -57,8 +59,8 @@ describe('App data generation', function() {
 
     it('Should error if missing username', function() {
       envStub.setVars(
-        ojpEnvVars()
-          .withoutUser()
+        envVars()
+          .withoutOjpUser()
           .build());
 
       expect(dataFromEnv).to.throw(Error);
@@ -66,12 +68,63 @@ describe('App data generation', function() {
 
     it('Should error if missing password', function() {
       envStub.setVars(
-        ojpEnvVars()
-          .withoutPassword()
+        envVars()
+          .withoutOjpPassword()
           .build());
 
       expect(dataFromEnv).to.throw(Error);
     });
+
+  });
+
+  describe('App Dynamics configuration', function() {
+
+    it('Should read config', function() {
+      envStub.setVars(
+        envVarsWithVars(
+          appDynamicsEnvVars()
+            .withControllerHostName('some-host-name')
+            .withAccountName('some-account-name')
+            .withAccountAccessKey('some-key')
+            .withApplicationName('some-app')
+            .withTierName('some-tier')
+            .build()));
+
+      var appData = dataFromEnv();
+      appData.should.have.property('appDynamics');
+
+      var appDynamicsData = appData.appDynamics;
+      appDynamicsData.should.have.property('controllerHostName', 'some-host-name');
+      appDynamicsData.should.have.property('accountName', 'some-account-name');
+      appDynamicsData.should.have.property('accountAccessKey', 'some-key');
+      appDynamicsData.should.have.property('applicationName', 'some-app');
+      appDynamicsData.should.have.property('tierName', 'some-tier');
+    });
+
+    describe('Should report no app dynamics config if any App Dynamics env vars missing', function() {
+
+      var completeAppDynamicsConfig = appDynamicsEnvVars().build();
+      for (var envVar in completeAppDynamicsConfig) {
+        if(completeAppDynamicsConfig.hasOwnProperty(envVar)) {
+          (function(excludedEnvVar) {
+            it('When missing \'' + excludedEnvVar + '\'', function() {
+              envStub.setVars(
+                envVarsWithVars(
+                  appDynamicsEnvVars()
+                    .withoutVar(excludedEnvVar)
+                    .build()));
+              var appData = dataFromEnv();
+              appData.should.not.have.property('appDynamics');
+            });
+          })(envVar);
+        }
+      }
+
+    });
+
+    function envVarsWithVars(vars) {
+      return envVars().withVars(vars).build();
+    }
 
   });
 

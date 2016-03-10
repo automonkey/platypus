@@ -13,6 +13,11 @@ The following environment variables exist and should be configured prior to exec
 | GA_DOMAIN        | Google Analytics tracking domain to use for events  | N         |         |
 | OJP_USER         | Username for the ojp.nationalrail.co.uk web service | Y         |         |
 | OJP_PASS         | Password for the ojp.nationalrail.co.uk web service | Y         |         |
+| APP_DYNAMICS_CONTROLLER_HOST_NAME | App Dynamics account controller host name | N | |
+| APP_DYNAMICS_ACCOUNT_NAME | App Dynamics account name | N | |
+| APP_DYNAMICS_ACCOUNT_ACCESS_KEY | App Dynamics account access key | N | |
+| APP_DYNAMICS_APP_NAME | App Dynamics app name | N | |
+| APP_DYNAMICS_TIER_NAME | App Dynamics tier name | N | |
 
 To execute the web service run:
 

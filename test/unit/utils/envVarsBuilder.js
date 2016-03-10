@@ -1,28 +1,34 @@
+var extend = require('util')._extend;
+
 module.exports = function() {
-  return new OjpEnvVarsBuilder();
+  return new EnvVarsBuilder();
 };
 
-function OjpEnvVarsBuilder() {
+function EnvVarsBuilder() {
   var envVars = {
     'OJP_USER': 'some-user',
     'OJP_PASS': 'some-password'
   };
 
   return {
-    withUser: function(username) {
+    withOjpUser: function(username) {
       envVars.OJP_USER = username;
       return this;
     },
-    withoutUser: function() {
+    withoutOjpUser: function() {
       delete envVars.OJP_USER;
       return this;
     },
-    withPassword: function(password) {
+    withOjpPassword: function(password) {
       envVars.OJP_PASS = password;
       return this;
     },
-    withoutPassword: function() {
+    withoutOjpPassword: function() {
       delete envVars.OJP_PASS;
+      return this;
+    },
+    withVars: function(vars) {
+      envVars = extend(envVars, vars);
       return this;
     },
     build: function() {
