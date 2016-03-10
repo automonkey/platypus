@@ -16,7 +16,6 @@
     "appdynamics": "^4.1.7",
     "bluebird": "^3.3.1",
     "express": "^4.0.0",
-    "nodealytics": "~0.0.6",
     "q": "1.0.0",
     "request": "^2.0.0",
     "xml2js": "~0.4.0",

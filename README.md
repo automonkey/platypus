@@ -9,8 +9,6 @@ The following environment variables exist and should be configured prior to exec
 | Variable         | Usage                                               | Required? | Default |
 | ---------------- | --------------------------------------------------- | --------- | ------- |
 | PORT             | Port number to listen on                            | N         | 3000    |
-| GA_TRACKING_CODE | Google Analytics tracking code to use for events    | N         |         |
-| GA_DOMAIN        | Google Analytics tracking domain to use for events  | N         |         |
 | OJP_USER         | Username for the ojp.nationalrail.co.uk web service | Y         |         |
 | OJP_PASS         | Password for the ojp.nationalrail.co.uk web service | Y         |         |
 | APP_DYNAMICS_CONTROLLER_HOST_NAME | App Dynamics account controller host name | N | |
