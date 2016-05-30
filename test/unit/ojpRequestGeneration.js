@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var libxml = require('libxmljs');
+var parseXmlString = require('xml2js').parseString;
 var request = require('../../lib/ojpRequestGeneration');
 
 describe('OJP Request Generation', function() {
@@ -23,13 +23,11 @@ describe('OJP Request Generation', function() {
 });
 
 function isValidXml(request) {
-  try {
-    libxml.parseXml(request);
-  }
-  catch (e) {
-    return false;
-  }
+  var isValid = false;
+  parseXmlString(request, function(err) {
+    if(!err) isValid = true;
+  });
 
-  return true;
+  return isValid;
 }
 
