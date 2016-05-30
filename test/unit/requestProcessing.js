@@ -1,7 +1,6 @@
 var chai = require('chai');
 var mockery = require('mockery');
 var Promise = require('bluebird');
-var q = require('q');
 var InputError = require('../../lib/inputError');
 var anOjpResult = require('./utils/ojpResultBuilder').anOjpResult;
 var ojpStub = require('./utils/ojpStub').createStubOjp();
@@ -28,7 +27,6 @@ describe('Request Processing', function() {
     mockery.registerMock('./ojp', ojpStub);
     mockery.registerMock('./ojpResultProcessing', ojpResultProcessingStub);
     mockery.registerAllowable('bluebird')
-    mockery.registerAllowable('q')
     mockery.registerAllowable('./inputError')
     mockery.registerAllowable('../../lib/requestProcessing')
     var requestProcessing = require('../../lib/requestProcessing')

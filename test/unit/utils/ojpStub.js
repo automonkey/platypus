@@ -1,4 +1,4 @@
-var q = require('q');
+var Promise = require('bluebird');
 
 module.exports.createStubOjp = function() {
   return {
@@ -21,9 +21,9 @@ module.exports.createStubOjp = function() {
       var stubRes = this.stubOjpResults;
       return {
         fetchJourneyData: function(route) {
-          var defferedReturn = q.defer();
-          defferedReturn.resolve(stubRes[route.destination] || []);
-          return defferedReturn.promise;
+          return new Promise(function(resolve, reject) {
+            resolve(stubRes[route.destination] || []);
+          });
         }
       };
     }
